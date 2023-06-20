@@ -1,0 +1,73 @@
+<p>
+  <mat-toolbar>
+    <button mat-icon-button aria-label="Back button" routerLink="../..">
+      <mat-icon>keyboard_backspace</mat-icon>
+    </button>
+    <span>Back to choose another city</span>
+  </mat-toolbar>
+</p>
+
+<div *ngIf="weatherInfo && weatherInfo.name" class="container">
+  <h1>Today's highlights in {{ weatherInfo.name }}</h1>
+  <div class="wrapper">
+    <div class="cell">
+      <mat-icon>wb_sunny</mat-icon>
+      <div class="title">Temperature</div>
+      <div class="info">
+        <span *ngIf="unit === 'kelvin'"> {{ weatherInfo.main.temp }} K </span>
+        <span *ngIf="unit === 'celsius'">
+          {{ weatherInfo.main.temp | temperatureConversion : "C" }} 
+          <span>&#8451;</span>
+        </span>
+      </div>
+    </div>
+    <div class="cell">
+      <mat-icon>opacity</mat-icon>
+      <div class="title">Humidity</div>
+      <div class="info">{{ weatherInfo.main.humidity }} %</div>
+    </div>
+    <div class="cell">
+      <mat-icon>assistant_photo</mat-icon>
+      <div class="title">Wind speed</div>
+      <div class="info">{{ weatherInfo.wind.speed }} m/s</div>
+    </div>
+    <div class="cell">
+      <mat-icon>nature_people</mat-icon>
+      <div class="title">Feels like</div>
+      <div class="info">
+        <span *ngIf="unit === 'kelvin'">
+          {{ weatherInfo.main.feels_like }} K
+        </span>
+        <span *ngIf="unit === 'celsius'">
+          {{ weatherInfo.main.feels_like | temperatureConversion : "C" }} 
+          <span>&#8451;</span>
+        </span>
+      </div>
+    </div>
+    <div class="cell">
+      <mat-icon>slow_motion_video</mat-icon>
+      <div class="title">Pressure</div>
+      <div class="info">{{ weatherInfo.main.pressure }} hPa</div>
+    </div>
+    <div class="cell">
+      <mat-icon>cloud</mat-icon>
+      <div class="title">Description</div>
+      <div class="info">
+        {{ weatherInfo.weather[0].description | titlecase }}
+      </div>
+    </div>
+  </div>
+
+  <mat-button-toggle-group [(ngModel)]="unit" aria-label="unit">
+    <mat-button-toggle value="celsius">Celsius</mat-button-toggle>
+    <mat-button-toggle value="kelvin">Kelvin</mat-button-toggle>
+  </mat-button-toggle-group>
+</div>
+
+<div *ngIf="weatherInfo && !weatherInfo.name" class="wrong">Something went wrong</div>
+
+<div *ngIf="isLoading" class="spinner">
+  <mat-spinner></mat-spinner>
+</div>
+
+<router-outlet></router-outlet>

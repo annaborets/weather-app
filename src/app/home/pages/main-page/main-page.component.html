@@ -1,0 +1,31 @@
+<mat-toolbar color="primary">
+  <mat-toolbar-row>
+    <span>Weather Forecast</span>
+  </mat-toolbar-row>
+</mat-toolbar>
+
+<form [formGroup]="form">
+  <h2>Choose your city:</h2>
+  <mat-form-field>
+    <mat-label>City</mat-label>
+    <mat-select formControlName="city">
+      <mat-option *ngFor="let city of cities" [value]="city">{{ city }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <button type="submit"
+          [disabled]="form.invalid"
+          mat-raised-button
+          color="primary"
+          (click)="redirectToAnotherPage()">
+        Get forecast
+  </button>
+</form>
+
+<div class="icons">
+<ng-container *ngFor="let _ of [].constructor(150)">
+    <div>
+        <mat-icon class="icon">cloud_queue</mat-icon>
+        <mat-icon class="icon">wb_sunny</mat-icon>
+    </div>
+</ng-container>
+</div>
